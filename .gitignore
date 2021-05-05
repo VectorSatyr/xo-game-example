@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Output directories
+**/out
+
+# Visual Studio directories
+**/.vs
+
+# CMake settings
+CMakeSettings.json
