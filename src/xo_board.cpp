@@ -6,6 +6,10 @@ namespace Game
 	{
 	}
 
+	XOBoard::XOBoard(std::size_t width, std::size_t height, std::vector<std::size_t> cells)
+	{
+	}
+
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
 		return 0;
@@ -17,6 +21,6 @@ namespace Game
 
 	bool XOBoard::full() const
 	{
-		return false;
+		return true;
 	}
 }
