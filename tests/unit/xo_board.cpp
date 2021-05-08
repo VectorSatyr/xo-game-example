@@ -20,5 +20,5 @@ TEST_CASE("XOBoard::full returns false when any cell is empty")
 		1, 1, 1 
 	}).full();
 	auto expected = false;
-	CHECK(actual == expected);
+	REQUIRE(actual == expected);
 }
