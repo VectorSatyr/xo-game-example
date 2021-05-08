@@ -1,12 +1,17 @@
 #include "sdl_xo_game/xo_board.hpp"
+#include <algorithm>
 
 namespace Game
 {
-	XOBoard::XOBoard(std::size_t width, std::size_t height)
+	XOBoard::XOBoard(std::size_t width, std::size_t height) :
+		XOBoard(width, height, std::vector<std::size_t>(width * height, 0))
 	{
 	}
 
-	XOBoard::XOBoard(std::size_t width, std::size_t height, std::vector<std::size_t> cells)
+	XOBoard::XOBoard(
+		std::size_t width, std::size_t height, std::vector<std::size_t> cells
+	) :
+		width(width), height(height), cells(cells)
 	{
 	}
 
@@ -21,6 +26,9 @@ namespace Game
 
 	bool XOBoard::full() const
 	{
-		return true;
+		return std::all_of(
+			cells.cbegin(), cells.cend(), 
+			[](const std::size_t n) { return (n > 0); }
+		);
 	}
 }

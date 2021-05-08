@@ -13,5 +13,8 @@ namespace Game
 		std::size_t lines(std::size_t value, std::size_t length) const override;
 		void place(std::size_t value, std::size_t x, std::size_t y) override;
 		bool full() const override;
+	private:
+		const std::size_t width, height;
+		std::vector<std::size_t> cells;
 	};
 }
