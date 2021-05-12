@@ -31,6 +31,6 @@ namespace Game
 	private:
 		const std::vector<T> seq;
 		const size_type len;
-		const std::function<std::size_t(const std::size_t&)> pred;
+		const std::function<size_type(const size_type)> pred;
 	};
 }
