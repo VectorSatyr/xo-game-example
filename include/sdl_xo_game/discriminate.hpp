@@ -8,9 +8,9 @@ namespace Game
 	class Discriminate final :
 		public Sequence<T>
 	{
-		using size_type = std::vector<T>::size_type;
-
 	public:
+		using size_type = typename std::vector<T>::size_type;
+
 		Discriminate(
 			const std::vector<T> seq,
 			const size_type len,
