@@ -11,3 +11,14 @@ TEST_CASE("Discriminate<T>::vector returns a discriminated vector of T")
 	const auto expected = std::vector<int>{ 1, 2, 3, 4 };
 	REQUIRE(actual == expected);
 }
+
+TEST_CASE("Discriminate<T>::vector returns only elements in range")
+{
+	const auto actual = Game::Discriminate<unsigned int>(
+		{ 2, 4, 6, 8 }, 10,
+		[](const Game::Discriminate<unsigned int>::size_type n) noexcept {
+			return n + 3;
+		}).vector();
+	const auto expected = std::vector<unsigned int>{ 8 };
+	REQUIRE(actual == expected);
+}
