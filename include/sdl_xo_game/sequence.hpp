@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 namespace Game
 {
@@ -6,6 +7,6 @@ namespace Game
 	struct __declspec(novtable) Sequence
 	{
 		virtual ~Sequence() = default;
-		virtual T vector() const = 0;
+		virtual std::vector<T> vector() const = 0;
 	};
 }
