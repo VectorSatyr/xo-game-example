@@ -55,3 +55,14 @@ TEST_CASE("XOBoard::lines returns 0 if no lines match value")
 	auto expected = 0;
 	REQUIRE(actual == expected);
 }
+
+TEST_CASE("XOBoard::lines returns 0 when length exceeds area")
+{
+	auto actual = Game::XOBoard(3, 3, {
+		7, 7, 7,
+		7, 7, 7,
+		7, 7, 7
+	}).lines(7, 4);
+	auto expected = 0;
+	REQUIRE(actual == expected);
+}
