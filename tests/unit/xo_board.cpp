@@ -33,3 +33,14 @@ TEST_CASE("XOBoard::lines returns total unique lines of value and length")
 	auto expected = 4;
 	REQUIRE(actual == expected);
 }
+
+TEST_CASE("XOBoard::lines returns 0 if length is 0")
+{
+	auto actual = Game::XOBoard(3, 3, {
+		5, 5, 5,
+		5, 5, 5,
+		5, 5, 5
+	}).lines(5, 0);
+	auto expected = 0;
+	REQUIRE(actual == expected);
+}
