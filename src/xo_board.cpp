@@ -1,4 +1,5 @@
 #include "sdl_xo_game/xo_board.hpp"
+#include "sdl_xo_game/discriminate.hpp"
 #include <algorithm>
 
 namespace Game
@@ -17,69 +18,58 @@ namespace Game
 
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
+		using size_type = typename std::vector<std::size_t>::size_type;
 		std::size_t total = 0;
 
 		if (length > 0) {
-			const std::size_t size(cells.size());
+			const auto size(cells.size()), 
+				w(width - length + 1), 
+				h(height - length + 1);
+
+			// acquire line(s)
 			std::vector<std::vector<std::size_t>> lines;
-
-			const auto w(width - length + 1);
-			const auto h(height - length + 1);
-
-			// south-east line(s)
-			for (std::size_t y = 0; y < h; ++y) {
-				for (std::size_t x = 0; x < w; ++x) {
-					std::vector<std::size_t> line;
-					for (std::size_t n = 0; n < length; ++n) {
-						auto index = (y * width) + x + (n * (width + 1));
-						if (index < size) line.push_back(cells.at(index));
+			for (size_type y = 0; y < height; ++y) {
+				for (size_type x = 0; x < width; ++x) {
+					const auto n = (y * width) + x;
+					if (x < w && y < h) {
+						lines.push_back(
+							Game::Discriminate<std::size_t>(
+								cells, length, [this, &n](const size_type s) {
+									return n + (s * (width + 1));
+								}).vector());
+						lines.push_back(
+							Game::Discriminate<std::size_t>(
+								cells, length,
+								[this, &n, &length](const size_type s) {
+									return n + (length - 1) + (s * (width - 1));
+								}).vector());
 					}
-					if (line.size() == length) lines.push_back(line);
+					if (x < w) {
+						lines.push_back(
+							Game::Discriminate<std::size_t>(
+								cells, length, [&n](const size_type s) {
+									return n + s;
+								}).vector());
+					}
+					if (y < h) {
+						lines.push_back(
+							Game::Discriminate<std::size_t>(
+								cells, length, [this, &n](const size_type s) {
+									return n + (s * width);
+								}).vector());
+					}
 				}
 			}
 
-			// south-west line(s)
-			for (std::size_t y = 0; y < h; ++y) {
-				for (std::size_t x = 0; x < w; ++x) {
-					std::vector<std::size_t> line;
-					for (std::size_t n = 0; n < length; ++n) {
-						auto index = (y * width) + (length - 1) + x + (n * (width - 1));
-						if (index < size) line.push_back(cells.at(index));
-					}
-					if (line.size() == length) lines.push_back(line);
-				}
-			}
-
-			// horizontal line(s)
-			for (std::size_t y = 0; y < height; ++y) {
-				for (std::size_t x = 0; x < w; ++x) {
-					std::vector<std::size_t> line;
-					for (std::size_t n = 0; n < length; ++n) {
-						auto index = (y * width) + x + n;
-						if (index < size) line.push_back(cells.at(index));
-					}
-					if (line.size() == length) lines.push_back(line);
-				}
-			}
-
-			// vertical line(s)
-			for (std::size_t y = 0; y < h; ++y) {
-				for (std::size_t x = 0; x < width; ++x) {
-					std::vector<std::size_t> line;
-					for (std::size_t n = 0; n < length; ++n) {
-						auto index = (y * width) + x + (n * width);
-						if (index < size) line.push_back(cells.at(index));
-					}
-					if (line.size() == length) lines.push_back(line);
-				}
-			}
-
-			// matches
+			// test matches(s)
 			const auto pred = [&value](const std::size_t n) noexcept {
-				return n == value;
+				return (n == value);
 			};
 			for (const auto& line : lines) {
-				if (std::all_of(line.cbegin(), line.cend(), pred)) total++;
+				if (std::count_if(
+					line.cbegin(), line.cend(), pred) == length) {
+					total++;
+				}
 			}
 		}
 
