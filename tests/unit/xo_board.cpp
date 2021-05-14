@@ -90,3 +90,16 @@ TEST_CASE("XOBoard::lines returns correct value when height exceeds length")
 	auto expected = 6;
 	REQUIRE(actual == expected);
 }
+
+TEST_CASE("XOBoard::lines returns correctly when dimensions exceed length")
+{
+	auto actual = Game::XOBoard(5, 5, {
+		0, 1, 1, 0, 1,
+		1, 0, 1, 0, 1,
+		1, 1, 0, 1, 1,
+		1, 1, 1, 0, 0,
+		1, 0, 1, 0, 1
+	}).lines(1, 2);
+	auto expected = 25;
+	REQUIRE(actual == expected);
+}
