@@ -104,6 +104,17 @@ TEST_CASE("XOBoard::lines returns correctly when dimensions exceed length")
 	REQUIRE(actual == expected);
 }
 
+TEST_CASE("XOBoard::lines only counts values once when length is 1")
+{
+	auto actual = Game::XOBoard(3, 3, {
+		0, 6, 6, 
+		6, 0, 6, 
+		6, 6, 0, 
+		}).lines(6, 1);
+	auto expected = 6;
+	REQUIRE(actual == expected);
+}
+
 TEST_CASE("XOBoard::place puts a value on the board at the designated location")
 {
 	Game::XOBoard xo(3, 3);
