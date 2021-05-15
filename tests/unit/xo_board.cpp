@@ -103,3 +103,12 @@ TEST_CASE("XOBoard::lines returns correctly when dimensions exceed length")
 	auto expected = 25;
 	REQUIRE(actual == expected);
 }
+
+TEST_CASE("XOBoard::place puts a value on the board at the designated location")
+{
+	Game::XOBoard xo(3, 3);
+	xo.place(4, 1, 2);
+	auto actual = xo.lines(4, 1);
+	auto expected = 1;
+	CHECK(actual == expected);
+}
