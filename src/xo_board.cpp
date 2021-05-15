@@ -19,15 +19,23 @@ namespace Game
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
 		using size_type = typename std::vector<std::size_t>::size_type;
-		std::size_t total = 0;
+		std::vector<std::vector<std::size_t>> lines;
 
-		if (length > 0) {
-			const auto size(cells.size()), 
-				w(width - length + 1), 
+		// acquire line(s)
+		switch (length) {
+		case 0:
+			// do nothing
+			break;
+
+		case 1:
+			for (auto cell : cells) lines.push_back({ cell });
+			break;
+
+		default:
+			const auto size(cells.size()),
+				w(width - length + 1),
 				h(height - length + 1);
 
-			// acquire line(s)
-			std::vector<std::vector<std::size_t>> lines;
 			for (size_type y = 0; y < height; ++y) {
 				for (size_type x = 0; x < width; ++x) {
 					const auto n = (y * width) + x;
@@ -60,16 +68,17 @@ namespace Game
 					}
 				}
 			}
+		}
 
-			// test matches(s)
-			const auto pred = [&value](const std::size_t n) noexcept {
-				return (n == value);
-			};
-			for (const auto& line : lines) {
-				if (std::count_if(
-					line.cbegin(), line.cend(), pred) == length) {
-					total++;
-				}
+		// test matches(s)
+		std::size_t total = 0;
+		const auto pred = [&value](const std::size_t n) noexcept {
+			return (n == value);
+		};
+		for (const auto& line : lines) {
+			if (std::count_if(
+				line.cbegin(), line.cend(), pred) == length) {
+				total++;
 			}
 		}
 
