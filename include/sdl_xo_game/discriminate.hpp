@@ -1,12 +1,12 @@
 #pragma once
-#include "sequence.hpp"
+#include "utils/sequence.hpp"
 #include <functional>
 
 namespace Game
 {
 	template<class T>
 	class Discriminate final :
-		public Sequence<T>
+		public utils::sequence<T>
 	{
 	public:
 		using size_type = typename std::vector<T>::size_type;

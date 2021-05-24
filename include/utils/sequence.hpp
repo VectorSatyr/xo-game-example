@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 
-namespace Game
+namespace utils
 {
 	template<class T>
-	struct __declspec(novtable) Sequence
+	struct __declspec(novtable) sequence
 	{
-		virtual ~Sequence() = default;
+		virtual ~sequence() = default;
 		virtual std::vector<T> vector() const = 0;
 	};
 }
