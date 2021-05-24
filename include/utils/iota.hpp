@@ -10,7 +10,7 @@ namespace utils
 	public:
 		using size_type = typename std::vector<T>::size_type;
 
-		explicit iota(const size_type len) : Iota(len, 0) {};
+		explicit iota(const size_type len) : iota(len, 0) {};
 
 		explicit iota(const size_type len, const T start) :
 			len(len), start(start) {};
