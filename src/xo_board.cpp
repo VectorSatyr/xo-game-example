@@ -18,27 +18,23 @@ namespace Game
 
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
-		std::vector<std::vector<std::size_t>> lines;
+		std::size_t total = 0;
 
 		// acquire line(s)
-		switch (length) {
-		case 0:
-			// do nothing
-			break;
-
-		case 1:
-			for (auto cell : cells) lines.push_back({ cell });
-			break;
-
-		default:
-			const auto size(cells.size()),
-				w(width - length + 1),
-				h(height - length + 1);
+		if (length == 1) {
+			total += std::count_if(cells.cbegin(), cells.cend(),
+				[&value](const auto elem) { return (elem == value); });
+		}
+		else if (length > 1) {
+			std::vector<std::vector<std::size_t>> lines;
+			const auto size(cells.size());
+			const size_type scan_width(width - length + 1),
+				scan_height(height - length + 1);
 
 			for (size_type y = 0; y < height; ++y) {
 				for (size_type x = 0; x < width; ++x) {
 					const auto n = (y * width) + x;
-					if (x < w && y < h) {
+					if (x < scan_width && y < scan_height) {
 						lines.push_back(
 							Game::Discriminate<std::size_t>(
 								cells, length, [this, &n](const size_type s) {
@@ -51,14 +47,14 @@ namespace Game
 									return n + (length - 1) + (s * (width - 1));
 								}).vector());
 					}
-					if (x < w) {
+					if (x < scan_width) {
 						lines.push_back(
 							Game::Discriminate<std::size_t>(
 								cells, length, [&n](const size_type s) {
 									return n + s;
 								}).vector());
 					}
-					if (y < h) {
+					if (y < scan_height) {
 						lines.push_back(
 							Game::Discriminate<std::size_t>(
 								cells, length, [this, &n](const size_type s) {
@@ -67,18 +63,14 @@ namespace Game
 					}
 				}
 			}
-		}
 
-		// test matches(s)
-		std::size_t total = 0;
-		const auto pred = [&value](const std::size_t n) noexcept {
-			return (n == value);
-		};
-		for (const auto& line : lines) {
-			if (std::count_if(
-				line.cbegin(), line.cend(), pred) == length) {
-				total++;
-			}
+			// test matches(s)
+			auto pred([&value](auto elem) { return (elem == value); });
+			total += std::count_if(lines.cbegin(), lines.cend(),
+				[&length, &pred](const auto& line) {
+					return (line.size() == length &&
+						std::all_of(line.cbegin(), line.cend(), pred));
+				});
 		}
 
 		// finished
