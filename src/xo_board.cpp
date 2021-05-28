@@ -18,7 +18,6 @@ namespace Game
 
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
-		using size_type = typename std::vector<std::size_t>::size_type;
 		std::vector<std::vector<std::size_t>> lines;
 
 		// acquire line(s)
