@@ -79,6 +79,7 @@ namespace Game
 
 	void XOBoard::place(std::size_t value, std::size_t x, std::size_t y)
 	{
+		cells[(y * width) + x] = value;
 	}
 
 	bool XOBoard::full() const
