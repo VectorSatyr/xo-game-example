@@ -80,7 +80,9 @@ namespace Game
 	void XOBoard::place(std::size_t value, std::size_t x, std::size_t y)
 	{
 		const auto pos = (y * width) + x;
-		if (cells.at(pos) == 0) cells[pos] = value;
+		if (pos < cells.size() && cells.at(pos) == 0) {
+			cells[pos] = value;
+		}
 	}
 
 	bool XOBoard::full() const
