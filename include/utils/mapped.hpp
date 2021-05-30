@@ -1,17 +1,17 @@
 #pragma once
-#include "utils/sequence.hpp"
+#include "sequence.hpp"
 #include <functional>
 
-namespace Game
+namespace utils
 {
 	template<class T>
-	class Discriminate final :
+	class mapped final :
 		public utils::sequence<T>
 	{
 	public:
 		using size_type = typename std::vector<T>::size_type;
 
-		Discriminate(
+		mapped(
 			const std::vector<T> seq,
 			const size_type len,
 			const std::function<size_type(const size_type)> pred

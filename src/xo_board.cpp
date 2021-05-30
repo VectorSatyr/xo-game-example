@@ -1,5 +1,5 @@
 #include "sdl_xo_game/xo_board.hpp"
-#include "sdl_xo_game/discriminate.hpp"
+#include "utils/mapped.hpp"
 #include <algorithm>
 
 namespace Game
@@ -36,28 +36,27 @@ namespace Game
 					const auto n = (y * width) + x;
 					if (x < scan_width && y < scan_height) {
 						lines.push_back(
-							Game::Discriminate<std::size_t>(
-								cells, length, [this, &n](const size_type s) {
+							utils::mapped<std::size_t>(cells, length, 
+								[this, &n](const size_type s) {
 									return n + (s * (width + 1));
 								}).vector());
 						lines.push_back(
-							Game::Discriminate<std::size_t>(
-								cells, length,
+							utils::mapped<std::size_t>(cells, length,
 								[this, &n, &length](const size_type s) {
 									return n + (length - 1) + (s * (width - 1));
 								}).vector());
 					}
 					if (x < scan_width) {
 						lines.push_back(
-							Game::Discriminate<std::size_t>(
-								cells, length, [&n](const size_type s) {
+							utils::mapped<std::size_t>(cells, length, 
+								[&n](const size_type s) {
 									return n + s;
 								}).vector());
 					}
 					if (y < scan_height) {
 						lines.push_back(
-							Game::Discriminate<std::size_t>(
-								cells, length, [this, &n](const size_type s) {
+							utils::mapped<std::size_t>(cells, length, 
+								[this, &n](const size_type s) {
 									return n + (s * width);
 								}).vector());
 					}
