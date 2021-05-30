@@ -136,8 +136,8 @@ TEST_CASE("XOBoard::place does nothing when the designated location is occupied"
 TEST_CASE("XOBoard::place does nothing if the given location is out of bounds")
 {
 	Game::XOBoard xo(2, 2, { 6, 6, 6, 6 });
-	xo.place(6, 3, 3);
-	auto actual = xo.lines(6, 1);
+	xo.place(7, 3, 3);
+	auto actual = xo.lines(7, 1);
 	auto expected = 0;
 	CHECK(actual == expected);
 }
