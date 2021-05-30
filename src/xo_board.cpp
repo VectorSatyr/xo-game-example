@@ -86,9 +86,8 @@ namespace Game
 
 	bool XOBoard::full() const
 	{
-		return std::all_of(
-			cells.cbegin(), cells.cend(), 
-			[](const std::size_t n) { return (n > 0); }
-		);
+		return (cells.empty()) ? false : 
+			std::all_of(cells.cbegin(), cells.cend(), 
+			[](const auto& elem) { return (elem > 0); });
 	}
 }
