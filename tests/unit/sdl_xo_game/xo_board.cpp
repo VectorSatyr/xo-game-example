@@ -123,3 +123,12 @@ TEST_CASE("XOBoard::place puts a value on the board at the designated location")
 	auto expected = 1;
 	CHECK(actual == expected);
 }
+
+TEST_CASE("XOBoard::place does nothing when the designated location is occupied")
+{
+	Game::XOBoard xo(3, 3, { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+	xo.place(10, 2, 1);
+	auto actual = xo.lines(10, 1);
+	auto expected = 0;
+	CHECK(actual == expected);
+}
