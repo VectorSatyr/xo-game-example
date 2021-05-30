@@ -23,6 +23,13 @@ TEST_CASE("XOBoard::full returns false when any cell is empty")
 	REQUIRE(actual == expected);
 }
 
+TEST_CASE("XOBoard::full returns false when there are no contents")
+{
+	auto actual = Game::XOBoard(10, 10, {}).full();
+	auto expected = false;
+	REQUIRE(actual == expected);
+}
+
 TEST_CASE("XOBoard::lines returns total unique lines of value and length")
 {
 	auto actual = Game::XOBoard(3, 3, { 
