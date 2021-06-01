@@ -1,5 +1,5 @@
 add_executable (xo_unit_tests "tests.cpp" "sdl_xo_game/xo_board.cpp" "utils/mapped.cpp")
 add_dependencies (xo_unit_tests xo_game_lib)
-add_test (NAME unit_tests COMMAND xo_unit_tests)
 target_link_libraries (xo_unit_tests PRIVATE doctest::doctest xo_game_lib)
 target_include_directories (xo_unit_tests PUBLIC ${CMAKE_SOURCE_DIR}/include)
+doctest_discover_tests (xo_unit_tests)
