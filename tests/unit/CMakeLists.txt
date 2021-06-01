@@ -1,4 +1,3 @@
-find_package (doctest CONFIG REQUIRED)
 add_executable (xo_unit_tests "tests.cpp" "sdl_xo_game/xo_board.cpp" "utils/mapped.cpp")
 add_dependencies (xo_unit_tests xo_game_lib)
 add_test (NAME unit_tests COMMAND xo_unit_tests)
