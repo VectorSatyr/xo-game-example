@@ -1,4 +1,4 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.18)
 project ("sdl_xo_game")
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
