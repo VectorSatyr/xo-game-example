@@ -97,6 +97,7 @@ TEST_SUITE("Game::XOBoard")
 			REQUIRE(actual == expected);
 		}
 	}
+
 	TEST_SUITE("Game::XOBoard::place(value, x, y)")
 	{
 		TEST_CASE("Puts a value on the board at the designated location")
@@ -105,7 +106,7 @@ TEST_SUITE("Game::XOBoard")
 			xo.place(4, 1, 2);
 			auto actual = xo.lines(4, 1);
 			auto expected = 1;
-			CHECK(actual == expected);
+			REQUIRE(actual == expected);
 		}
 
 		TEST_CASE("Does nothing when the designated location is occupied")
@@ -114,7 +115,7 @@ TEST_SUITE("Game::XOBoard")
 			xo.place(10, 2, 1);
 			auto actual = xo.lines(10, 1);
 			auto expected = 0;
-			CHECK(actual == expected);
+			REQUIRE(actual == expected);
 		}
 
 		TEST_CASE("Does nothing if the given location is out of bounds")
@@ -123,9 +124,10 @@ TEST_SUITE("Game::XOBoard")
 			xo.place(7, 3, 3);
 			auto actual = xo.lines(7, 1);
 			auto expected = 0;
-			CHECK(actual == expected);
+			REQUIRE(actual == expected);
 		}
 	}
+
 	TEST_SUITE("Game::XOBoard::full()")
 	{
 		TEST_CASE("Returns true when all cells are occupied")
