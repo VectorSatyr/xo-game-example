@@ -19,11 +19,11 @@ namespace Game
 	std::size_t XOBoard::lines(std::size_t value, std::size_t length) const
 	{
 		std::size_t total = 0;
+		auto pred([&value](const auto& elem) { return (elem == value); });
 
 		// acquire line(s)
 		if (length == 1) {
-			total += std::count_if(cells.cbegin(), cells.cend(),
-				[&value](const auto elem) { return (elem == value); });
+			total += std::count_if(cells.cbegin(), cells.cend(), pred);
 		}
 		else if (length > 1) {
 			std::vector<std::vector<std::size_t>> lines;
@@ -64,7 +64,6 @@ namespace Game
 			}
 
 			// test matches(s)
-			auto pred([&value](auto elem) { return (elem == value); });
 			total += std::count_if(lines.cbegin(), lines.cend(),
 				[&length, &pred](const auto& line) {
 					return (line.size() == length &&
